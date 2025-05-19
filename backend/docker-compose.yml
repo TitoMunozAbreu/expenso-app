@@ -1,0 +1,22 @@
+services:
+
+  database:
+    container_name: expenso_db
+    image: postgres:16.2
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - expenso_db:/var/lib/postgresql/data
+    networks:
+      - expenso-network
+
+networks:
+  expenso-network:
+    driver: bridge
+volumes:
+  expenso_db:
