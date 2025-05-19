@@ -1,3 +1,39 @@
 spring:
   application:
     name: backend
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:${DB}://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: never
+      schema-locations: file:schema.sql
+      data-locations: file:data.sql
+      platform: postgresql
+  jpa:
+    database: ${DB}
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  ai:
+    openai:
+      chat:
+        options:
+          model: ${GEMINI_API_MODEL}
+        base-url: ${GEMINI_API_BASE_URL}
+        completions-path: ${GEMINI_API_PATH}
+      api-key: ${GEMINI_API_KEY}
+    receipt:
+      prompt: ${AI_RECEIPT_PROMPT}
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+
+gemini:
+  body:
+    template: ${GEMINI_BODY_TEMPLATE}
